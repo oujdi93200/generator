@@ -1,0 +1,32 @@
+
+version: '3.7'
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+    - POSTGRES_USER=myuser
+    - POSTGRES_PASSWORD=password
+    - POSTGRES_DB=mydb
+    ports:
+    - 5432:5432
+    volumes:
+    - postgres_data:/var/lib/postgres
+    networks:
+    - generator
+volumes:
+  postgres_data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /root/generator/postgres
+networks:
+  generator:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.2.0/24
+
+
+
